@@ -1,0 +1,14 @@
+debug/Person.o
+debug/exceptions.o
+debug/main.o
+debug/mainwindow.o
+debug/managermess.o
+debug/managermessage.o
+debug/mess.o
+debug/message.o
+debug/nonClassFunctions.o
+debug/query.o
+debug/studentmess.o
+debug/studentmessage.o
+debug/qrc_resource.o
+debug/moc_mainwindow.o

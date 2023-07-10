@@ -1,0 +1,14 @@
+release/Person.o
+release/exceptions.o
+release/main.o
+release/mainwindow.o
+release/managermess.o
+release/managermessage.o
+release/mess.o
+release/message.o
+release/nonClassFunctions.o
+release/query.o
+release/studentmess.o
+release/studentmessage.o
+release/qrc_resource.o
+release/moc_mainwindow.o

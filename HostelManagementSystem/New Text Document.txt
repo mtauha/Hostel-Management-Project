@@ -1,0 +1,81 @@
+QString Selection = "SELECT * FROM Registration WHERE CNIC = :key";
+QString Insert = "INSERT INTO Main (id, User_name, Password, Name, Date_Of_Birth, Room_Number, Contact, Email, Address, CNIC, Guardian_Name, Guardian_Contact, District, Photo_Link) "
+                 "VALUES (:id, :un, :pd, :name, :dob, :room, :contact, :email, :address, :cnic, :guardianName, :guardianContact, :district, :photo)";
+QString Delete = "DELETE FROM Registration WHERE CNIC = :key";
+
+QSqlQuery selectQuery;
+QSqlQuery insertQuery;
+QSqlQuery deleteQuery;
+
+selectQuery.prepare(Selection);
+selectQuery.bindValue(":key", key);
+
+if (selectQuery.exec()) {
+    if (selectQuery.next()) {
+        // Retrieve the data from the registration table
+        QString id = generateUniqueId(); // Generate a unique ID for the new record in the Main table
+        QString un = generateUsername(); // Generate a unique username for the new record in the Main table
+        QString pd = generatePassword(); // Generate a password for the new record in the Main table
+        QString name = selectQuery.value("Name").toString();
+        QString dob = selectQuery.value("Date_Of_Birth").toString();
+        QString room = Room;
+        QString contact = selectQuery.value("Contact").toString();
+        QString email = selectQuery.value("Email").toString();
+        QString address = selectQuery.value("Postal_Address").toString();
+        QString cnic = key;
+        QString guardianName = selectQuery.value("Guardian_Name").toString();
+        QString guardianContact = selectQuery.value("Guardian_Contact").toString();
+        QString district = selectQuery.value("Domicile").toString();
+        QString photo = selectQuery.value("Photo_Link").toString();
+
+        // Insert the data into the main table
+        insertQuery.prepare(Insert);
+        insertQuery.bindValue(":id", id);
+        insertQuery.bindValue(":un", un);
+        insertQuery.bindValue(":pd", pd);
+        insertQuery.bindValue(":name", name);
+        insertQuery.bindValue(":dob", dob);
+        insertQuery.bindValue(":room", room);
+        insertQuery.bindValue(":contact", contact);
+        insertQuery.bindValue(":email", email);
+        insertQuery.bindValue(":address", address);
+        insertQuery.bindValue(":cnic", cnic);
+        insertQuery.bindValue(":guardianName", guardianName);
+        insertQuery.bindValue(":guardianContact", guardianContact);
+        insertQuery.bindValue(":district", district);
+        insertQuery.bindValue(":photo", photo);
+
+        if (insertQuery.exec()) {
+            // Remove the data from the registration table
+            deleteQuery.prepare(Delete);
+            deleteQuery.bindValue(":key", key);
+
+            if (deleteQuery.exec()) {
+                messageBox->setWindowTitle("Transfer Success");
+                messageBox->setText("Data transferred");
+                messageBox->setStyleSheet("QMessageBox { border-radius: 10px; }");
+                messageBox->exec();
+            } else {
+                messageBox->setWindowTitle("Delete Error");
+                messageBox->setText("Failed to delete data from Registration table");
+                messageBox->setStyleSheet("QMessageBox { border-radius: 10px; }");
+                messageBox->exec();
+            }
+        } else {
+            messageBox->setWindowTitle("Insert Error");
+            messageBox->setText("Failed to insert data into Main table");
+            messageBox->setStyleSheet("QMessageBox { border-radius: 10px; }");
+            messageBox->exec();
+        }
+    } else {
+        messageBox->setWindowTitle("Record Not Found");
+        messageBox->setText("No record found in Registration table with the provided CNIC");
+        messageBox->setStyleSheet("QMessageBox { border-radius: 10px; }");
+        messageBox->exec();
+    }
+} else {
+    messageBox->setWindowTitle("Select Error");
+    messageBox->setText("Failed to execute the select query");
+    messageBox->setStyleSheet("QMessageBox { border-radius: 10px; }");
+    messageBox->exec();
+}

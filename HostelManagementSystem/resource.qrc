@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Text Files/Announcements.txt</file>
+        <file>Text Files/Complains.txt</file>
+        <file>PICTURES/BACKGROUNDS/BackGround.png</file>
+        <file>PICTURES/BACKGROUNDS/GroupBoxBackground.png</file>
+        <file>PICTURES/OTHERS/ReadIcon.png</file>
+        <file>PICTURES/OTHERS/WriteIcon.jpg</file>
+    </qresource>
+</RCC>
